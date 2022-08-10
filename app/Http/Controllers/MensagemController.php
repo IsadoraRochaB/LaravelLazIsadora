@@ -6,6 +6,7 @@ use App\Models\Mensagem;
 use App\Models\Topico;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class MensagemController extends Controller
 {
@@ -42,13 +43,16 @@ class MensagemController extends Controller
         $validated = $request->validate([
             'titulo' => 'required|max:255',
             'mensagem' => 'required|max:255',
-            'topico' => 'array|exists:App\Models\Topico,id'
+            'topico' => 'array|exists:App\Models\Topico,id',
+            'imagem' =>'imagem'
         ]);
         if ($validated) {
             //print_r($request->get('topico));
             $mensagem = new Mensagem();
             $mensagem-> user_id = Auth::user()->id;
             $mensagem->titulo = $request->get('titulo');
+            $name = $request->file('imagem')->getClientOriginalName();
+            $path =$request->file('imagem')->storeAs("public/img")
             $mensagem->mensagem = $request->get('mensagem');
             $mensagem->save();
             $mensagem->topicos()->attach($request->get('topico'));
