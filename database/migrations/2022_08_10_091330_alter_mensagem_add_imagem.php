@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Shema::table('mensagems', function (Blueprint $table) {
+        Schema::table('mensagems', function (Blueprint $table) {
             $table->string('imagem')->nullable();
         });
     }
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Shema::table('mensagems', function (Blueprint $table){
+        Schema::table('mensagems', function (Blueprint $table){
             $table->dropColumn('imagem');
         });
     }
