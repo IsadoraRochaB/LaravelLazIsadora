@@ -8,7 +8,7 @@
     @endforeach
 </ul>
 @endif
-<form method="POST" action="{{url('mensagem', $mensagem->id)}}">
+<form method="POST" action="{{url('mensagem', $mensagem->id)}}" enctype="multipart/form-data"> 
     @csrf
     @method('PUT')
     <div>
