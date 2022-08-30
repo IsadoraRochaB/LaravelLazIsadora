@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Topico;
 use App\Traits\ApiResponse;
-use Illuminate\Http\Request;
 
 class TopicoController extends Controller
 {
@@ -18,7 +18,7 @@ class TopicoController extends Controller
     public function index()
     {
         $topicos = Topico::all();
-        return $this->success($topicos);
+        return $this->sucess($topicos);
     }
 
     /**
@@ -39,17 +39,17 @@ class TopicoController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validated = $request->validate ([
             'topico' => 'required|max:255',
         ]);
-        if ($validated) {
-            try {
+        if($validated){
+            try{
                 $topico = new Topico();
-                $topico-> = $request->get('topico');
+                $topico->topico = $request->get('topico');
                 $topico->save();
                 return $this->success($topico);
-            }catch (\Throwable $th) {
-                return $this->error("erro ao cadastrar o tópico", 401, $th->getMessage());
+            } catch (\Throwable $th){
+                return $this->error("Erro ao cadastrar o tópico !", 401, $th->getMessage());
             }
         }
     }
@@ -65,8 +65,8 @@ class TopicoController extends Controller
         try{
             $topico = Topico::findOrFail($id);
             return $this->success($topico);
-        } catch (\Throwble $th) {
-            return $this->error("topico não encontrado", 401, $th->getMessage());
+        } catch (\Throwable $th){
+            return $this->error("Topico não encontrado! ", 401, $th->getMessage());
         }
     }
 
@@ -90,7 +90,19 @@ class TopicoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate ([
+            'topico' => 'required|max:255',
+        ]);
+        if($validated){
+            try{
+                $topico = Topico::findOrFail($id);
+                $topico->topico = $request->get('topico');
+                $topico->save();
+                return $this->success($topico);
+            } catch (\Throwable $th){
+                return $this->error("Topico não encontrado! ", 401, $th->getMessage());
+            }
+        }
     }
 
     /**
@@ -101,6 +113,12 @@ class TopicoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $topico = Topico::findOrFail($id);
+            $topico->delete();
+            return $this->success($topico);
+        } catch (\Throwable $th){
+            return $this->error("Topico não encontrado! ", 401, $th->getMessage());
+        }
     }
 }
