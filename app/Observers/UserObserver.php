@@ -16,7 +16,7 @@ class UserObserver
      */
     public function created(User $user)
     {
-        Mail::to($user)->send(new UserRegistered($user));
+        // Mail::to($user)->send(new UserRegistered($user));
     }
 
     /**
