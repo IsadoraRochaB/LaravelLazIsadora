@@ -83,7 +83,7 @@ class Push extends Component
             $status = false;
             foreach ($this->avisoId as $aviso){
                 foreach ($this->userId as $user){
-                    $avisoUser = avisoUser::where('aviso_id', $aviso)
+                    $avisoUser = AvisoUser::where('aviso_id', $aviso)
                     ->where('user_id', $user)->get();
                     if (count($avisoUser) === 0){
                         $avisoMessageUser = new AvisoUser();
